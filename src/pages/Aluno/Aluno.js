@@ -31,7 +31,7 @@ export default function Aluno() {
 
   return (
     <Container>
-      <h1>Página de Aluno</h1>
+      <h1>Página de Alunos</h1>
     </Container>
   );
 }
