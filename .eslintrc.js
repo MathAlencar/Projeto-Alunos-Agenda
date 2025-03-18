@@ -35,6 +35,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'no-param-reassign': 'off',
     'react/jsx-uses-react': 'off', // Para desativar erro de JSX
-    'react/react-in-jsx-scope': 'off', // Para não precisar importar React em cada arquivo
+    'react/jsx-no-bind': 'off',
+    'no-useless-return': 'off',
   },
 };

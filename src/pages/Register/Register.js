@@ -1,37 +1,92 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Title } from './styled';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import validator from 'validator';
 import { Container } from '../../styles/GlobalStyles';
+import { Form } from './styled';
 import axios from '../../services/axios';
-import * as exampleActions from '../../store/modules/example/actions';
 // React.fragment é um componente vazio
 
 export default function login() {
-  const dispatch = useDispatch(); // irá disparar as ações.
+  const [nome, setNome] = useState('');
+  const [sobrenome, setSobrenome] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // O que são ações? -> irá disparar ações para o redux, ou seja informando ele o que ele tem que fazer
+  async function handleSubmit(e) {
+    e.preventDefault();
+    let errors = false;
 
-  // Assim que o componente é montado ele irá executar esse effect
-  useEffect(() => {
-    // Sua função axios que realiza a requisição, chamando a API
-    async function getData() {
-      const response = await axios.get('/alunos');
-      console.log(response);
+    if (nome.length < 3 || nome.length > 255) {
+      errors = true;
+      toast.error('Campo nome deve ter entre 3 a 255 caracteres');
+    }
+    if (password.length < 3 || password.length > 255) {
+      errors = true;
+      toast.error('Campo senha deve ter entre 3 a 50 caracteres');
     }
 
-    getData();
-  });
+    if (!validator.isEmail(email)) {
+      errors = true;
+      toast.error('Email inválido');
+    }
 
-  function handleClick(e) {
-    e.preventDefault();
+    if (errors) return;
 
-    dispatch(exampleActions.clicaBotao());
-    dispatch(exampleActions.clicaRequest());
+    try {
+      const response = await axios.post('users/', {
+        nome,
+        sobrenome,
+        email,
+        password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
     <Container>
-      <h1>Register</h1>
+      <h1>Crie um usuário</h1>
+      <Form onSubmit={handleSubmit}>
+        <label htmlFor="nome">
+          Nome:
+          <input
+            type="text"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)} // Conforme for digitando ele vai aparecer.
+            placeholder="Seu nome"
+          />
+        </label>
+        <label htmlFor="sobrenome">
+          Sobrenome:
+          <input
+            type="text"
+            value={sobrenome}
+            onChange={(e) => setSobrenome(e.target.value)} // Conforme for digitando ele vai aparecer.
+            placeholder="Seu sobrenome"
+          />
+        </label>
+        <label htmlFor="email">
+          Email:
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} // Conforme for digitando ele vai aparecer.
+            placeholder="Seu email"
+          />
+        </label>
+        <label htmlFor="password">
+          password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} // Conforme for digitando ele vai aparecer.
+            placeholder="Sua password"
+          />
+        </label>
+
+        <button type="submit">Criar perfil</button>
+      </Form>
     </Container>
   );
 }
