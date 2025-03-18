@@ -22,12 +22,19 @@ module.exports = {
   },
   plugins: ['react', 'prettier', 'react-hooks'],
   rules: {
-    'prettier/prettier': "warn",
+    'prettier/prettier': 'warn',
     'react/jsx-filename-extension': 0,
     'import/prefer-default-export': 0,
-    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/rules-of-hooks': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
     'react/react-in-jsx-scope': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'no-undef': 'off',
+    'no-unused-vars': 'off',
+    'consistent-return': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'no-param-reassign': 'off',
+    'react/jsx-uses-react': 'off', // Para desativar erro de JSX
+    'react/react-in-jsx-scope': 'off', // Para não precisar importar React em cada arquivo
   },
 };

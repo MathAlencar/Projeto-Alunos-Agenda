@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaBars,
@@ -6,6 +6,7 @@ import {
   FaHome,
   FaUserAlt,
   FaSignInAlt,
+  FaAccessibleIcon,
 } from 'react-icons/fa';
 
 import { Nav, Hamburger, Menu, MenuItem } from './styled';
@@ -26,13 +27,18 @@ export default function NavBar() {
           </Link>
         </MenuItem>
         <MenuItem onClick={() => setIsOpen(false)}>
-          <Link to="/profile">
+          <Link to="/Aluno">
             <FaUserAlt size={20} />
           </Link>
         </MenuItem>
         <MenuItem onClick={() => setIsOpen(false)}>
-          <Link to="/login">
+          <Link to="/register">
             <FaSignInAlt size={20} />
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={() => setIsOpen(false)}>
+          <Link to="/fotos">
+            <FaAccessibleIcon size={20} />
           </Link>
         </MenuItem>
       </Menu>
