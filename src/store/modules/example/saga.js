@@ -13,6 +13,7 @@ const requisicao = () =>
 function* exampleRequest() {
   try {
     yield call(requisicao);
+    console.log('oi');
     yield put(actions.clicaSucess());
   } catch (error) {
     yield put(actions.clicaFail());

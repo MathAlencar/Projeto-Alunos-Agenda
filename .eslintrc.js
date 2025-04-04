@@ -37,5 +37,7 @@ module.exports = {
     'react/jsx-uses-react': 'off', // Para desativar erro de JSX
     'react/jsx-no-bind': 'off',
     'no-useless-return': 'off',
+    'require-yield': 'off',
+    'prefer-const': 'off',
   },
 };

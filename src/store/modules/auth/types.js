@@ -1,0 +1,9 @@
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
+export const SAVE_PREVPATH = 'SET_PREV_PATH';
+export const PERSIST_REHYDRATE = 'persist/REHYDRATE';
+export const CREATE_EDIT_REQUEST = 'CREATE_EDIT_REQUEST';
+export const CREATE_EDIT_FAILURE = 'CREATE_EDIT_FAILURE';
+export const CREATE_EDIT_SUCESS = 'CREATE_EDIT_SUCESS';

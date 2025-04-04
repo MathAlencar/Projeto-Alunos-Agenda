@@ -1,16 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import validator from 'validator';
+import { useNavigate } from 'react-router-dom';
+import { get } from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
 import { Container } from '../../styles/GlobalStyles';
 import { Form } from './styled';
 import axios from '../../services/axios';
+import * as Actions from '../../store/modules/auth/actions';
+
 // React.fragment é um componente vazio
 
 export default function login() {
+  const dispatch = useDispatch();
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const nomeStored = useSelector((state) => state.auth.user.nome);
+  const sobrenomeStored = useSelector((state) => state.auth.user.sobrenome);
+  const emailStored = useSelector((state) => state.auth.user.email);
+  const id = useSelector((state) => state.auth.user.id);
+
+  // USando o useEffect ele irá executar esse comando somente uma única vez.
+  useEffect(() => {
+    if (!id) return;
+    setNome(nomeStored);
+    setSobrenome(sobrenomeStored);
+    setEmail(emailStored);
+  }, [id, nomeStored, emailStored, sobrenomeStored]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -20,7 +40,7 @@ export default function login() {
       errors = true;
       toast.error('Campo nome deve ter entre 3 a 255 caracteres');
     }
-    if (password.length < 3 || password.length > 255) {
+    if (!id && (password.length < 3 || password.length > 255)) {
       errors = true;
       toast.error('Campo senha deve ter entre 3 a 50 caracteres');
     }
@@ -33,20 +53,27 @@ export default function login() {
     if (errors) return;
 
     try {
-      const response = await axios.post('users/', {
-        nome,
-        sobrenome,
-        email,
-        password,
-      });
+      dispatch(
+        Actions.RequesteUserRequest({
+          id,
+          nome,
+          sobrenome,
+          email,
+          password,
+          navigate,
+        })
+      );
     } catch (error) {
-      console.log(error);
+      const erros = get(error, 'response.data.error', []);
+      erros.forEach((err) => {
+        toast.error(err);
+      });
     }
   }
 
   return (
     <Container>
-      <h1>Crie um usuário</h1>
+      <h1>{id ? 'Editar dados' : 'Crie sua conta'}</h1>
       <Form onSubmit={handleSubmit}>
         <label htmlFor="nome">
           Nome:
@@ -85,7 +112,7 @@ export default function login() {
           />
         </label>
 
-        <button type="submit">Criar perfil</button>
+        <button type="submit">{id ? 'Salvar' : 'Criar perfil'}</button>
       </Form>
     </Container>
   );

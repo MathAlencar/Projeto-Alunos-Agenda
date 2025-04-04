@@ -13,7 +13,7 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<Alunos />} />
       <Route
-        path="/aluno/:id/edit"
+        path="/aluno/:id?/edit"
         element={
           <ProtectRoute isClosed>
             <Aluno />
@@ -29,10 +29,10 @@ export default function AppRoutes() {
         }
       />
       <Route
-        path="/fotos/"
+        path="/fotos/:id?"
         element={
           <ProtectRoute isClosed>
-            <Alunos />
+            <Fotos />
           </ProtectRoute>
         }
       />

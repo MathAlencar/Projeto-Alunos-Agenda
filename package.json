@@ -1,6 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
+  "homepage": "http://34.151.231.108/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
